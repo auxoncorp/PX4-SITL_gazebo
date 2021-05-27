@@ -153,6 +153,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   getSdfParam<std::string>(_sdf, "airspeedSubTopic", airspeed_sub_topic_, airspeed_sub_topic_);
   getSdfParam<std::string>(_sdf, "baroSubTopic", baro_sub_topic_, baro_sub_topic_);
   groundtruth_sub_topic_ = "/groundtruth";
+  snapshot_sub_topic_ = "/snapshot";
 
   // set input_reference_ from inputs.control
   input_reference_.resize(n_out_max);
@@ -361,6 +362,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   airspeed_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + airspeed_sub_topic_, &GazeboMavlinkInterface::AirspeedCallback, this);
   baro_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + baro_sub_topic_, &GazeboMavlinkInterface::BarometerCallback, this);
   wind_sub_ = node_handle_->Subscribe("~/" + wind_sub_topic_, &GazeboMavlinkInterface::WindVelocityCallback, this);
+  snapshot_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + snapshot_sub_topic_, &GazeboMavlinkInterface::SnapshotCallback, this);
 
   // Get the model joints
   auto joints = model_->GetJoints();
@@ -1032,6 +1034,21 @@ void GazeboMavlinkInterface::GroundtruthCallback(GtPtr& groundtruth_msg) {
   groundtruth_altitude = groundtruth_msg->altitude();
   // the rest of the data is obtained directly on this interface and sent to
   // the FCU
+}
+
+void GazeboMavlinkInterface::SnapshotCallback(SnapshotPtr& snapshot_msg) {
+    mavlink_modality_snapshot_t ml_msg;
+    ml_msg.time_usec = snapshot_msg->time_usec();
+    ml_msg.sequence_number = snapshot_msg->sequence_number();
+    const uint32_t word0 = snapshot_msg->word0();
+    const uint32_t word1 = snapshot_msg->word1();
+    const uint32_t word2 = snapshot_msg->word2();
+    (void) memcpy(&ml_msg.snapshot[0], &word0, 4);
+    (void) memcpy(&ml_msg.snapshot[4], &word1, 4);
+    (void) memcpy(&ml_msg.snapshot[8], &word2, 4);
+    mavlink_message_t msg;
+    mavlink_msg_modality_snapshot_encode_chan(1, 200, MAVLINK_COMM_0, &msg, &ml_msg);
+    send_mavlink_message(&msg);
 }
 
 void GazeboMavlinkInterface::LidarCallback(LidarPtr& lidar_message, const int& id) {

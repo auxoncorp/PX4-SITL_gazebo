@@ -69,6 +69,7 @@
 #include <MagneticField.pb.h>
 #include <Pressure.pb.h>
 #include <Wind.pb.h>
+#include <Snapshot.pb.h>
 
 #include <mavlink/v2.0/common/mavlink.h>
 #include "msgbuffer.h"
@@ -106,6 +107,7 @@ typedef const boost::shared_ptr<const sensor_msgs::msgs::SITLGps> GpsPtr;
 typedef const boost::shared_ptr<const sensor_msgs::msgs::MagneticField> MagnetometerPtr;
 typedef const boost::shared_ptr<const sensor_msgs::msgs::Pressure> BarometerPtr;
 typedef const boost::shared_ptr<const physics_msgs::msgs::Wind> WindPtr;
+typedef const boost::shared_ptr<const sensor_msgs::msgs::Snapshot> SnapshotPtr;
 
 typedef std::pair<const int, const ignition::math::Quaterniond> SensorIdRot_P;
 typedef std::map<transport::SubscriberPtr, SensorIdRot_P > Sensor_M;
@@ -293,6 +295,7 @@ private:
   void AirspeedCallback(AirspeedPtr& airspeed_msg);
   void BarometerCallback(BarometerPtr& baro_msg);
   void WindVelocityCallback(WindPtr& msg);
+  void SnapshotCallback(SnapshotPtr& snapshot_msg);
   void send_mavlink_message(const mavlink_message_t *message);
   void forward_mavlink_message(const mavlink_message_t *message);
   void handle_message(mavlink_message_t *msg, bool &received_actuator);
@@ -357,6 +360,7 @@ private:
   transport::SubscriberPtr airspeed_sub_;
   transport::SubscriberPtr baro_sub_;
   transport::SubscriberPtr wind_sub_;
+  transport::SubscriberPtr snapshot_sub_;
 
   Sensor_M sensor_map_; // Map of sensor SubscriberPtr, IDs and orientations
 
@@ -369,6 +373,7 @@ private:
   std::string airspeed_sub_topic_;
   std::string baro_sub_topic_;
   std::string wind_sub_topic_;
+  std::string snapshot_sub_topic_;
 
   std::mutex last_imu_message_mutex_ {};
   std::condition_variable last_imu_message_cond_ {};

@@ -53,13 +53,14 @@
   <xacro:arg name='enable_lockstep' default='true' />
   <xacro:arg name='use_tcp' default='true' />
   <xacro:arg name='vehicle_is_tailsitter' default='false' />
-  <xacro:arg name='visual_material' default='DarkGrey' />
+  <xacro:arg name='visual_material' default='Orange' />
   <xacro:arg name='enable_mavlink_interface' default='true' />
   <xacro:arg name='enable_wind' default='false' />
   <!-- The following causes segfault with multiple vehicles if defaults to true!!! -->
   <xacro:arg name='enable_ground_truth' default='false' />
   <xacro:arg name='enable_logging' default='false' />
   <xacro:arg name='log_file' default='iris' />
+  <xacro:arg name='enable_probe' default='false' />
 
   <!-- macros for gazebo plugins, sensors -->
   <xacro:include filename="$(arg rotors_description_dir)/urdf/component_snippets.xacro" />
@@ -102,6 +103,12 @@
     namespace="${namespace}"
     >
   </xacro:groundtruth_plugin_macro>
+
+  <!-- Instantiate Modality probe plugin. -->
+  <xacro:probe_plugin_macro
+    namespace="${namespace}"
+    >
+  </xacro:probe_plugin_macro>
 
   <!-- Instantiate magnetometer plugin. -->
   <xacro:magnetometer_plugin_macro

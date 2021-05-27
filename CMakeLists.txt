@@ -153,6 +153,8 @@ else()
   set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
 endif()
 
+find_package(ModalityProbe REQUIRED)
+
 ###########
 ## Build ##
 ###########
@@ -215,6 +217,7 @@ link_directories(
 # Generation of SDF models #
 #--------------------------#
 
+set(enable_probe "true")
 set(enable_mavlink_interface "true")
 set(enable_ground_truth "false")
 set(enable_logging "false")
@@ -239,7 +242,7 @@ endif()
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris/iris.sdf
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/iris/iris.sdf
-  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/iris_base.urdf  ${rotors_description_dir}/urdf/iris_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir} send_vision_estimation:=${send_vision_estimation} send_odometry:=${send_odometry}
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/iris_base.urdf  ${rotors_description_dir}/urdf/iris_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir} send_vision_estimation:=${send_vision_estimation} send_odometry:=${send_odometry} enable_probe:=${enable_probe}
   COMMAND gz sdf -p  ${rotors_description_dir}/urdf/iris_base.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/iris/iris.sdf
   COMMAND rm -f ${rotors_description_dir}/urdf/iris_base.urdf
   DEPENDS ${rotors_description_dir}/urdf/iris.xacro
@@ -301,6 +304,7 @@ set(sensor_msgs
   msgs/OpticalFlow.proto
   msgs/MagneticField.proto
   msgs/Pressure.proto
+  msgs/Snapshot.proto
   )
 
 PROTOBUF_GENERATE_CPP(MAV_PROTO_SRCS MAV_PROTO_HDRS ${mav_msgs})
@@ -347,6 +351,12 @@ add_library(gazebo_usv_dynamics_plugin SHARED src/gazebo_usv_dynamics_plugin.cpp
 add_library(gazebo_parachute_plugin SHARED src/gazebo_parachute_plugin.cpp)
 add_library(gazebo_airship_dynamics_plugin SHARED src/gazebo_airship_dynamics_plugin.cpp)
 
+add_library(gazebo_probe_plugin
+    SHARED
+    src/gazebo_probe_plugin.cpp
+    src/modality_helpers.c
+    )
+
 set(plugins
   gazebo_airspeed_plugin
   gazebo_geotagged_images_plugin
@@ -372,12 +382,35 @@ set(plugins
   gazebo_usv_dynamics_plugin
   gazebo_parachute_plugin
   gazebo_airship_dynamics_plugin
+  gazebo_probe_plugin
   )
 
 foreach(plugin ${plugins})
   target_link_libraries(${plugin} ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${TinyXML_LIBRARIES})
 endforeach()
 target_link_libraries(gazebo_opticalflow_plugin ${OpticalFlow_LIBS})
+
+target_link_libraries(gazebo_probe_plugin ModalityProbe::LibModalityProbe)
+
+target_compile_definitions(
+    gazebo_probe_plugin
+    PRIVATE MODALITY_PERSISTENT_EPOCH_CACHE_DIR="${CMAKE_BINARY_DIR}/persistent_epoch_cache"
+    )
+
+modality_probe_generate_manifest(
+    TARGET gazebo_probe_plugin
+    DEPENDS src/gazebo_probe_plugin.cpp
+    COMPONENT_NAME "gazebo-component"
+    OUTPUT_PATH "gazebo-component"
+    FILE_EXTENSIONS "cpp"
+    SOURCE_PATH "src/gazebo_probe_plugin.cpp"
+    )
+
+modality_probe_generate_header(
+    TARGET gazebo_probe_plugin
+    OUTPUT_FILE "include/gazebo_component_definitions.h"
+    COMPONENT_PATH "gazebo-component"
+    )
 
 # If BUILD_ROS_INTERFACE set to ON, build plugins that have ROS dependencies
 # Current plugins that can be used with ROS interface: gazebo_motor_failure_plugin
