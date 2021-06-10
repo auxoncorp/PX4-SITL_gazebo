@@ -355,6 +355,7 @@ add_library(gazebo_probe_plugin
     SHARED
     src/gazebo_probe_plugin.cpp
     src/modality_helpers.c
+    src/mutators/impact_force.c
     )
 
 set(plugins

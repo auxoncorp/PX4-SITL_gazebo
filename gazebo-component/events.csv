@@ -16,4 +16,5 @@ a8097269-0c33-49b1-9334-9a514d11509e,1073741689,DYNAMIC_EXPECTATION,Modulus stim
 a8097269-0c33-49b1-9334-9a514d11509e,1073741688,MODALITY_CONTROL_MSG_DROPPED,Modulus control message dropped,INTERNAL,u32,,
 a8097269-0c33-49b1-9334-9a514d11509e,1073741687,MODALITY_TRIGGER_DROPPED,Modulus trigger control block dropped,INTERNAL,u32,,
 a8097269-0c33-49b1-9334-9a514d11509e,1073741686,MODALITY_MUTATION_EPOCH_ADVANCED,Mutation epoch advanced,INTERNAL,u16,,
-a8097269-0c33-49b1-9334-9a514d11509e,1,GROUND_TRUTH_ALTITUDE,Ground truth altitude: [cm],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,91
+a8097269-0c33-49b1-9334-9a514d11509e,1,GROUND_TRUTH_ALTITUDE,Ground truth altitude: [cm],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,162
+a8097269-0c33-49b1-9334-9a514d11509e,2,APPLY_IMPACT_FORCE,Mutation impact force: [Newtons],gazebo;impact-force,f32,gazebo_probe_plugin.cpp,108

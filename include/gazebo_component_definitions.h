@@ -4,8 +4,8 @@
  * Component:
  *   Name: gazebo-component
  *   ID: a8097269-0c33-49b1-9334-9a514d11509e
- *   Code hash: 9f41f1b694ea26e57319576917c9589553f0d5a8cf5686b541356f512075eeda
- *   Instrumentation hash: f04580398921e2b4493d30fd889781d581e2751051262a2451e9896e840871d1
+ *   Code hash: 5275c03b544c2e4196c4c5b03e259f8c71d0b6e8109974078ed7dfe9088070d4
+ *   Instrumentation hash: 5c0a56c58e92f48eff6359a1b4e843e6e3745f27f4c8ccabfe6ff1f06de1ec7b
  */
 
 #ifndef MODALITY_PROBE_GENERATED_IDENTIFIERS_H
@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 /*
- * Probes (sha3-256 3b705e4d0427209e5aede80b9841af9e7e5c44047a2668b20cd954bcc8b31331)
+ * Probes (sha3-256 33f0a6e42eb2ffb378aabdfc93e5c1ab0ce13d2ef875b017fea1247782b72830)
  */
 
 /*
@@ -24,12 +24,12 @@ extern "C" {
  * Description: Gazebo simulator plugin probe
  * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
  * Tags: gazebo;gazebo-plugin;simulator;control-plane
- * Location: gazebo_probe_plugin.cpp:28
+ * Location: gazebo_probe_plugin.cpp:33
  */
 #define GAZEBO_SIMULATOR (1060744754UL)
 
 /*
- * Events (sha3-256 4a83238581e5c69367472bcc9f26fd7c99cb0879b4020aa771a14e3582b862a9)
+ * Events (sha3-256 5e5e227cbe8cc34a74273f02a28f9831c90caf4ecd47e3eb907d91b110f223f3)
  */
 
 /*
@@ -38,9 +38,19 @@ extern "C" {
  * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
  * Tags: gazebo;ground-truth
  * Payload type: i32
- * Location: gazebo_probe_plugin.cpp:91
+ * Location: gazebo_probe_plugin.cpp:162
  */
 #define GROUND_TRUTH_ALTITUDE (1UL)
+
+/*
+ * Name: APPLY_IMPACT_FORCE
+ * Description: Mutation impact force: [Newtons]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;impact-force
+ * Payload type: f32
+ * Location: gazebo_probe_plugin.cpp:108
+ */
+#define APPLY_IMPACT_FORCE (2UL)
 
 #ifdef __cplusplus
 } /* extern "C" */

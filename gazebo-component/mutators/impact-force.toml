@@ -1,0 +1,30 @@
+name = "impact-force-mutator"
+tags = ["gazebo", "single-shot", "impact-force"]
+source_file = "src/gazebo_probe_plugin.cpp"
+source_line = 98
+
+[[params]]
+name = "link"
+type = "Enum"
+
+[params.constraints]
+minimum_effect_value = 0
+nominal_range = [0, 3]
+safety_range = [0, 3]
+hard_range = [0, 3]
+
+[params.enum_options]
+ROTOR_0 = 0
+ROTOR_1 = 1
+ROTOR_2 = 2
+ROTOR_3 = 3
+
+[[params]]
+name = "force"
+type = "F32"
+
+[params.constraints]
+minimum_effect_value = 0.0
+nominal_range = [-1000.0, 1000.0]
+safety_range = [-2000.0, 2000.0]
+hard_range = [-3000.0, 3000.0]

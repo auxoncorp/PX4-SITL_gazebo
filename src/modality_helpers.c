@@ -132,43 +132,60 @@ void send_probe_report(
         const size_t buffer_size)
 {
     size_t report_size;
-
     struct sockaddr_in collector_addr = {0};
     collector_addr.sin_family = AF_INET;
     collector_addr.sin_port = htons(COLLECTOR_PORT);
     collector_addr.sin_addr.s_addr = inet_addr(COLLECTOR_ADDRESS);
 
-    assert(buffer_size >= REPORT_SIZE);
-    size_t err = modality_probe_report(
+    const size_t err = modality_probe_report(
             probe,
             &buffer[0],
-            buffer_size - ANNOUNCEMENT_RESERVATION_SIZE,
+            buffer_size,
             &report_size);
     assert(err == MODALITY_PROBE_ERROR_OK);
 
     if(report_size != 0)
     {
-        /* Tack on a mutator announcement if there are report bytes to send */
-        size_t announcement_size;
-        err = modality_probe_announce_mutators(
-                probe,
-                &buffer[report_size],
-                buffer_size - report_size,
-                &announcement_size);
-        assert(err == MODALITY_PROBE_ERROR_OK);
-
-        const size_t total_size = report_size + announcement_size;
-        assert(total_size != 0);
-        assert(total_size <= buffer_size);
-
         const ssize_t status = sendto(
                 socket_fd,
                 (const char*) &buffer[0],
-                total_size,
+                report_size,
                 0,
                 (const struct sockaddr*) &collector_addr,
                 sizeof(collector_addr));
-        assert(status != -1);
+        assert(status == (ssize_t) report_size);
+    }
+}
+
+void send_mutator_announcement(
+        modality_probe * const probe,
+        const int socket_fd,
+        uint8_t * const buffer,
+        const size_t buffer_size)
+{
+    size_t announcement_size;
+    struct sockaddr_in collector_addr = {0};
+    collector_addr.sin_family = AF_INET;
+    collector_addr.sin_port = htons(COLLECTOR_PORT);
+    collector_addr.sin_addr.s_addr = inet_addr(COLLECTOR_ADDRESS);
+
+    const size_t err = modality_probe_announce_mutators(
+            probe,
+            &buffer[0],
+            buffer_size,
+            &announcement_size);
+    assert(err == MODALITY_PROBE_ERROR_OK);
+
+    if(announcement_size != 0)
+    {
+        const ssize_t status = sendto(
+                socket_fd,
+                (const char*) &buffer[0],
+                announcement_size,
+                0,
+                (const struct sockaddr*) &collector_addr,
+                sizeof(collector_addr));
+        assert(status == (ssize_t) announcement_size);
     }
 }
 
@@ -177,4 +194,13 @@ uint32_t u32_from_bytes(
 {
     assert(four_bytes != NULL);
     return (four_bytes[0] | (four_bytes[1] << 8) | (four_bytes[2] << 16) | (four_bytes[3] << 24));
+}
+
+uint64_t sim_time_to_ns(
+        const uint64_t us)
+{
+    const uint64_t ns = US_TO_NS(us);
+    /* Modality probe wall clock time values are 61 bits, make sure the reserved upper bits are clear */
+    assert((ns & 0xE000000000000000) == 0);
+    return ns;
 }
