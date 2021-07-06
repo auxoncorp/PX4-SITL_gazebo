@@ -12,7 +12,7 @@
 #include <modality/probe.h>
 #include <modality/mutator.h>
 #include <modality/mutation_interface.h>
-#include <modality/control_message_transport.h>
+#include <modality/support/control_message_transport.h>
 
 #ifdef __cplusplus
 extern "C" {

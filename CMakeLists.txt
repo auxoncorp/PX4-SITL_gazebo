@@ -391,7 +391,7 @@ foreach(plugin ${plugins})
 endforeach()
 target_link_libraries(gazebo_opticalflow_plugin ${OpticalFlow_LIBS})
 
-target_link_libraries(gazebo_probe_plugin ModalityProbe::LibModalityProbe)
+target_link_libraries(gazebo_probe_plugin ModalityProbe::LibModalityProbe ModalityProbe::LibModalityProbeSupport)
 
 target_compile_definitions(
     gazebo_probe_plugin
