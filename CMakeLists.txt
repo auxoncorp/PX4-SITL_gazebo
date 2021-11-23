@@ -401,7 +401,7 @@ target_compile_definitions(
 modality_probe_generate_manifest(
     TARGET gazebo_probe_plugin
     DEPENDS src/gazebo_probe_plugin.cpp
-    COMPONENT_NAME "gazebo-component"
+    COMPONENT_NAME "gazebo"
     OUTPUT_PATH "gazebo-component"
     FILE_EXTENSIONS "cpp"
     SOURCE_PATH "src/gazebo_probe_plugin.cpp"

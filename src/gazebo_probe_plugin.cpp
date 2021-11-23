@@ -33,7 +33,7 @@ namespace gazebo
             err = MODALITY_PROBE_INIT(
                     &probe_storage[0],
                     sizeof(probe_storage),
-                    GAZEBO_SIMULATOR,
+                    SIMULATOR,
                     WALL_CLOCK_RESOLUTION_NS,
                     WALL_CLOCK_ID,
                     &next_persistent_sequence_id,
@@ -42,7 +42,7 @@ namespace gazebo
                     MODALITY_TAGS("gazebo", "gazebo-plugin", "simulator", "control-plane"),
                     "Gazebo simulator plugin probe");
             assert(err == MODALITY_PROBE_ERROR_OK);
-            LOG_PROBE_INIT_W_RECVR(GAZEBO_SIMULATOR, UDP_CONTROL_RECVR_GAZEBO_PLUGIN);
+            LOG_PROBE_INIT_W_RECVR(SIMULATOR, UDP_CONTROL_RECVR_GAZEBO_PLUGIN);
 
             (void) memset(&impact_force_state, 0, sizeof(impact_force_state));
             (void) memset(&impact_force_mutator, 0, sizeof(impact_force_mutator));

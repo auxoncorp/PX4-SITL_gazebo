@@ -1,5 +1,5 @@
-name = "gazebo-component"
+name = "gazebo"
 id = "a8097269-0c33-49b1-9334-9a514d11509e"
-code_hash = "5275c03b544c2e4196c4c5b03e259f8c71d0b6e8109974078ed7dfe9088070d4"
-instrumentation_hash = "5c0a56c58e92f48eff6359a1b4e843e6e3745f27f4c8ccabfe6ff1f06de1ec7b"
+code_hash = "108c8249d1c0785ed3f7afe2ac518da979bc4f2530315440ea5e44a4e6c40e60"
+instrumentation_hash = "0bcbcf5f84f536bc7f5d2fcb248c2886ea04a60897372c2afc660c437a7dfac8"
 tags = ["gazebo", "simulator"]
