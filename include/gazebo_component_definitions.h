@@ -4,8 +4,8 @@
  * Component:
  *   Name: gazebo
  *   ID: a8097269-0c33-49b1-9334-9a514d11509e
- *   Code hash: 108c8249d1c0785ed3f7afe2ac518da979bc4f2530315440ea5e44a4e6c40e60
- *   Instrumentation hash: 0bcbcf5f84f536bc7f5d2fcb248c2886ea04a60897372c2afc660c437a7dfac8
+ *   Code hash: d33f1bf5bdb7352dabea35f5fe77c9c934c11e991ccd69f2fddf2b947b46f2c6
+ *   Instrumentation hash: 3ca19c759ef61695b68e36d978c6382ecf779ba623eed459e09638e2704b3dbb
  */
 
 #ifndef MODALITY_PROBE_GENERATED_IDENTIFIERS_H
@@ -29,7 +29,7 @@ extern "C" {
 #define SIMULATOR (1060744754UL)
 
 /*
- * Events (sha3-256 5e5e227cbe8cc34a74273f02a28f9831c90caf4ecd47e3eb907d91b110f223f3)
+ * Events (sha3-256 e37bd70344baf5b8e234cd8566d0e80c60b3b9422713eb251aec0bc7fac2505f)
  */
 
 /*
@@ -38,19 +38,9 @@ extern "C" {
  * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
  * Tags: gazebo;ground-truth
  * Payload type: i32
- * Location: gazebo_probe_plugin.cpp:162
+ * Location: gazebo_probe_plugin.cpp:153
  */
 #define GROUND_TRUTH_ALTITUDE (1UL)
-
-/*
- * Name: APPLY_IMPACT_FORCE
- * Description: Mutation impact force: [Newtons]
- * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
- * Tags: gazebo;impact-force
- * Payload type: f32
- * Location: gazebo_probe_plugin.cpp:108
- */
-#define APPLY_IMPACT_FORCE (2UL)
 
 #ifdef __cplusplus
 } /* extern "C" */

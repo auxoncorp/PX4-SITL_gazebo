@@ -105,15 +105,6 @@ namespace gazebo
 
             if(impact_force_state.active == true)
             {
-                err = MODALITY_PROBE_RECORD_W_F32_W_TIME(
-                        probe,
-                        APPLY_IMPACT_FORCE,
-                        impact_force_state.force,
-                        ModalityTimeStampNs(),
-                        MODALITY_TAGS("gazebo", "impact-force"),
-                        "Mutation impact force: [Newtons]");
-                assert(err == MODALITY_PROBE_ERROR_OK);
-
                 assert(
                         impact_force_state.link >= LINK_ROTOR_0
                         && impact_force_state.link <= LINK_ROTOR_3);
