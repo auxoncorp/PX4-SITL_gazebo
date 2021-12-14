@@ -4,8 +4,8 @@
  * Component:
  *   Name: gazebo
  *   ID: a8097269-0c33-49b1-9334-9a514d11509e
- *   Code hash: d33f1bf5bdb7352dabea35f5fe77c9c934c11e991ccd69f2fddf2b947b46f2c6
- *   Instrumentation hash: 3ca19c759ef61695b68e36d978c6382ecf779ba623eed459e09638e2704b3dbb
+ *   Code hash: b6204f8f3528b7412518e09de2d1bdfe7584b2e95f4722cb7e002e134e4dc10d
+ *   Instrumentation hash: dda1a292cce4318a6469a36a54f5c746cd5e87584e0fdb060f9fed1790ad91b0
  */
 
 #ifndef MODALITY_PROBE_GENERATED_IDENTIFIERS_H
@@ -29,7 +29,7 @@ extern "C" {
 #define SIMULATOR (1060744754UL)
 
 /*
- * Events (sha3-256 e37bd70344baf5b8e234cd8566d0e80c60b3b9422713eb251aec0bc7fac2505f)
+ * Events (sha3-256 204cfe1dc546631829e8c6d84221b868703d758ffa5ba7d2275969250303ea32)
  */
 
 /*
@@ -41,6 +41,56 @@ extern "C" {
  * Location: gazebo_probe_plugin.cpp:153
  */
 #define GROUND_TRUTH_ALTITUDE (1UL)
+
+/*
+ * Name: GROUND_TRUTH_LATITUDE
+ * Description: Ground truth latitude: [1E-7 degrees]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;ground-truth
+ * Payload type: i32
+ * Location: gazebo_probe_plugin.cpp:163
+ */
+#define GROUND_TRUTH_LATITUDE (2UL)
+
+/*
+ * Name: GROUND_TRUTH_LONGITUDE
+ * Description: Ground truth longitude: [1E-7 degrees]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;ground-truth
+ * Payload type: i32
+ * Location: gazebo_probe_plugin.cpp:173
+ */
+#define GROUND_TRUTH_LONGITUDE (3UL)
+
+/*
+ * Name: GROUND_TRUTH_VELOCITY_Z
+ * Description: Ground truth z velocity: [cm/s]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;ground-truth
+ * Payload type: i32
+ * Location: gazebo_probe_plugin.cpp:203
+ */
+#define GROUND_TRUTH_VELOCITY_Z (4UL)
+
+/*
+ * Name: GROUND_TRUTH_VELOCITY_X
+ * Description: Ground truth x velocity: [cm/s]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;ground-truth
+ * Payload type: i32
+ * Location: gazebo_probe_plugin.cpp:183
+ */
+#define GROUND_TRUTH_VELOCITY_X (5UL)
+
+/*
+ * Name: GROUND_TRUTH_VELOCITY_Y
+ * Description: Ground truth y velocity: [cm/s]
+ * Component ID: a8097269-0c33-49b1-9334-9a514d11509e
+ * Tags: gazebo;ground-truth
+ * Payload type: i32
+ * Location: gazebo_probe_plugin.cpp:193
+ */
+#define GROUND_TRUTH_VELOCITY_Y (6UL)
 
 #ifdef __cplusplus
 } /* extern "C" */

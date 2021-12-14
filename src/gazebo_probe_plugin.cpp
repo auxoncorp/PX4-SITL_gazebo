@@ -143,13 +143,13 @@ namespace gazebo
                     break;
                 }
 
-                // The mavlink interface uses mm, we're logging cm
-                const int32_t gt_alt = msg.altitude() * 100;
-
-                if(gt_alt != last_gt_alt)
+                const int64_t time_usec = msg.time_usec();
+                if((time_usec - last_time_usec) >= SAMPLE_LOG_INTERVAL_US)
                 {
+                    last_time_usec = time_usec;
                     did_log_event = true;
-                    last_gt_alt = gt_alt;
+
+                    const int32_t gt_alt = msg.altitude() * 100;
                     err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
                             probe,
                             GROUND_TRUTH_ALTITUDE,
@@ -157,6 +157,56 @@ namespace gazebo
                             sim_time_to_ns(msg.time_usec()),
                             MODALITY_TAGS("gazebo", "ground-truth"),
                             "Ground truth altitude: [cm]");
+                    assert(err == MODALITY_PROBE_ERROR_OK);
+
+                    const int32_t gt_lat = msg.latitude_rad() * (180 / M_PI) * 1e7;
+                    err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
+                            probe,
+                            GROUND_TRUTH_LATITUDE,
+                            gt_lat,
+                            sim_time_to_ns(msg.time_usec()),
+                            MODALITY_TAGS("gazebo", "ground-truth"),
+                            "Ground truth latitude: [1E-7 degrees]");
+                    assert(err == MODALITY_PROBE_ERROR_OK);
+
+                    const int32_t gt_lon = msg.longitude_rad() * (180 / M_PI) * 1e7;
+                    err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
+                            probe,
+                            GROUND_TRUTH_LONGITUDE,
+                            gt_lon,
+                            sim_time_to_ns(msg.time_usec()),
+                            MODALITY_TAGS("gazebo", "ground-truth"),
+                            "Ground truth longitude: [1E-7 degrees]");
+                    assert(err == MODALITY_PROBE_ERROR_OK);
+
+                    const int32_t gt_vx = msg.velocity_north() * 100;
+                    err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
+                            probe,
+                            GROUND_TRUTH_VELOCITY_X,
+                            gt_vx,
+                            sim_time_to_ns(msg.time_usec()),
+                            MODALITY_TAGS("gazebo", "ground-truth"),
+                            "Ground truth x velocity: [cm/s]");
+                    assert(err == MODALITY_PROBE_ERROR_OK);
+
+                    const int32_t gt_vy = msg.velocity_east() * 100;
+                    err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
+                            probe,
+                            GROUND_TRUTH_VELOCITY_Y,
+                            gt_vy,
+                            sim_time_to_ns(msg.time_usec()),
+                            MODALITY_TAGS("gazebo", "ground-truth"),
+                            "Ground truth y velocity: [cm/s]");
+                    assert(err == MODALITY_PROBE_ERROR_OK);
+
+                    const int32_t gt_vz = msg.velocity_up() * 100;
+                    err = MODALITY_PROBE_RECORD_W_I32_W_TIME(
+                            probe,
+                            GROUND_TRUTH_VELOCITY_Z,
+                            gt_vz,
+                            sim_time_to_ns(msg.time_usec()),
+                            MODALITY_TAGS("gazebo", "ground-truth"),
+                            "Ground truth z velocity: [cm/s]");
                     assert(err == MODALITY_PROBE_ERROR_OK);
                 }
             }
@@ -246,7 +296,7 @@ namespace gazebo
             modality_mutation_interface impact_force_mutator;
             impact_force_state_s impact_force_state;
 
-            int32_t last_gt_alt = 0;
+            int64_t last_time_usec = 0;
     };
 
     GZ_REGISTER_MODEL_PLUGIN(ProbePlugin)

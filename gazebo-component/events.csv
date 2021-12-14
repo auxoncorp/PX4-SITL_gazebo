@@ -17,3 +17,8 @@ a8097269-0c33-49b1-9334-9a514d11509e,1073741688,MODALITY_CONTROL_MSG_DROPPED,Mod
 a8097269-0c33-49b1-9334-9a514d11509e,1073741687,MODALITY_TRIGGER_DROPPED,Modulus trigger control block dropped,INTERNAL,u32,,
 a8097269-0c33-49b1-9334-9a514d11509e,1073741686,MODALITY_MUTATION_EPOCH_ADVANCED,Mutation epoch advanced,INTERNAL,u16,,
 a8097269-0c33-49b1-9334-9a514d11509e,1,GROUND_TRUTH_ALTITUDE,Ground truth altitude: [cm],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,153
+a8097269-0c33-49b1-9334-9a514d11509e,2,GROUND_TRUTH_LATITUDE,Ground truth latitude: [1E-7 degrees],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,163
+a8097269-0c33-49b1-9334-9a514d11509e,3,GROUND_TRUTH_LONGITUDE,Ground truth longitude: [1E-7 degrees],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,173
+a8097269-0c33-49b1-9334-9a514d11509e,4,GROUND_TRUTH_VELOCITY_Z,Ground truth z velocity: [cm/s],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,203
+a8097269-0c33-49b1-9334-9a514d11509e,5,GROUND_TRUTH_VELOCITY_X,Ground truth x velocity: [cm/s],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,183
+a8097269-0c33-49b1-9334-9a514d11509e,6,GROUND_TRUTH_VELOCITY_Y,Ground truth y velocity: [cm/s],gazebo;ground-truth,i32,gazebo_probe_plugin.cpp,193

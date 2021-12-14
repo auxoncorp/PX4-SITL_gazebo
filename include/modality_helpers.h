@@ -40,6 +40,9 @@ extern "C" {
 /* Send reports every ~50 ms */
 #define REPORT_INTERVAL_MS (50)
 
+/* Log some of the high-rate signal events periodically */
+#define SAMPLE_LOG_INTERVAL_US (100UL * 1000UL)
+
 /* Send mutator announcements every 2s */
 #define MUTATOR_ANNOUNCEMENT_INTERVAL_MS (2000)
 
